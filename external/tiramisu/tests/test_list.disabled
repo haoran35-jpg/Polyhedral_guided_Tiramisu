@@ -1,0 +1,12 @@
+7
+14 and 15 are disabled: because it requires libjpeg and libpng and we do not want to require these for tests.
+17
+32
+33
+36
+37
+38
+39
+74
+100: Halide saying can't find <buffer_name>.buffer with the nonblocking stuff
+163: Reenable after fixing the bug

@@ -1,0 +1,6 @@
+[submodule "external/pluto"]
+	path = external/pluto
+	url = https://github.com/bondhugula/pluto.git
+[submodule "external/tiramisu"]
+	path = external/tiramisu
+	url = https://github.com/Tiramisu-Compiler/tiramisu.git
