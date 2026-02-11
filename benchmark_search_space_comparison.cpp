@@ -136,16 +136,16 @@ void benchmark_gemm() {
         
         std::string order_str = "(" + order[0] + "," + order[1] + "," + order[2] + ")";
         std::cout << std::setw(20) << order_str
-                  << std::setw(12) << (a_coal ? "✓" : "✗")
-                  << std::setw(12) << (b_coal ? "✓" : "✗")
-                  << std::setw(12) << (c_coal ? "✓" : "✗")
+                  << std::setw(12) << (a_coal ? "Y" : "N")
+                  << std::setw(12) << (b_coal ? "Y" : "N")
+                  << std::setw(12) << (c_coal ? "Y" : "N")
                   << std::setw(15) << std::fixed << std::setprecision(1) 
                   << (score / 1024.0 / 1024.0);  // Convert to MB
         
         if (score > 0) {
-            std::cout << std::setw(15) << "✅ RETAIN";
+            std::cout << std::setw(15) << "RETAIN RETAIN";
         } else {
-            std::cout << std::setw(15) << "❌ PRUNE";
+            std::cout << std::setw(15) << "PRUNE PRUNE";
         }
         std::cout << "\n";
     }
@@ -185,7 +185,7 @@ void benchmark_gemm() {
         }
     }
     
-    std::cout << "\n✅ Optimal solution retained in constrained space!\n";
+    std::cout << "\nRETAIN Optimal solution retained in constrained space!\n";
     
     pluto_options_free(opts);
     pluto_context_free(ctx);
@@ -223,14 +223,6 @@ int main() {
     benchmark_conv2d();
     
     std::cout << "\n";
-    std::cout << "╔═══════════════════════════════════════════════════════════════╗\n";
-    std::cout << "║  Summary                                                      ║\n";
-    std::cout << "╚═══════════════════════════════════════════════════════════════╝\n\n";
-    
-    std::cout << "Key Findings:\n";
-    std::cout << "  ✓ Significant search space reduction\n";
-    std::cout << "  ✓ Optimal solution retained in constrained space\n";
-    std::cout << "  ✓ Pruned configs verified as suboptimal\n\n";
     
     return 0;
 }

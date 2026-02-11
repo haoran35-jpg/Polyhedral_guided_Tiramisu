@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# GEMM多访问模式Coalescing协调示例运行脚本
+# GEMM multi-access coalescing coordination example runner
 
 set -e
 
@@ -35,12 +35,4 @@ echo ""
 
 ./example_gemm_multi_access
 
-echo ""
-echo "✅ Demo completed!"
-echo ""
-echo "💡 关键发现:"
-echo "   1. GEMM中A[i][k], B[k][j], C[i][j]无法同时coalesced"
-echo "   2. 加权优化自动选择最大化coalesced流量的循环顺序"
-echo "   3. 优先保证流量大的数组(C和B) coalesced"
-echo "   4. 详细文档: MULTI_ACCESS_COALESCING.md"
 echo ""

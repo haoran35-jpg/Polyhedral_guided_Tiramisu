@@ -62,7 +62,7 @@ std::vector<ScheduleConfig> PlutoConstraintSolver::generate_candidates_from_opti
         // loopsorder variantsrequires Implementation
     }
     
-    std::cout << "✓ Generated " << candidates.size() 
+    std::cout << "Y Generated " << candidates.size() 
               << " candidates from PLUTO optimal\n\n";
     
     // Each 
@@ -104,9 +104,9 @@ std::vector<ScheduleConfig> PlutoConstraintSolver::generate_candidates_from_opti
         }
         
         std::cout << "  Coalescing: " 
-                  << (satisfies_coalescing_constraint(candidates[i]) ? "✓" : "✗") << "\n";
+                  << (satisfies_coalescing_constraint(candidates[i]) ? "Y" : "N") << "\n";
         std::cout << "  Legal: " 
-                  << (is_legal_config(candidates[i]) ? "✓" : "✗") << "\n";
+                  << (is_legal_config(candidates[i]) ? "Y" : "N") << "\n";
         std::cout << "\n";
     }
     
@@ -130,7 +130,7 @@ std::vector<ScheduleConfig> PlutoConstraintSolver::generate_all_legal_configs(
         }
     }
     
-    std::cout << "✓ Generated " << candidates.size() 
+    std::cout << "Y Generated " << candidates.size() 
               << " legal configs\n\n";
     
     // Print config details
@@ -140,7 +140,7 @@ std::vector<ScheduleConfig> PlutoConstraintSolver::generate_all_legal_configs(
     
     for (size_t i = 0; i < candidates.size(); i++) {
         std::cout << "Config " << (i+1) << ": " << candidates[i].description << "\n";
-        std::cout << "  Status: Legal ✓\n\n";
+        std::cout << "  Status: Legal Y\n\n";
     }
     
     return candidates;
@@ -172,7 +172,7 @@ std::vector<ScheduleConfig> PlutoConstraintSolver::generate_by_constraint_sampli
         }
     }
     
-    std::cout << "✓ Generated " << candidates.size() 
+    std::cout << "Y Generated " << candidates.size() 
               << " candidates by constraint sampling\n\n";
     
     // Print sampled configs
@@ -370,7 +370,7 @@ std::vector<ScheduleConfig> PlutoConstraintSolver::filter_by_constraints(
         }
     }
     
-    std::cout << "🔍 Constraint Filtering:\n";
+    std::cout << "Search: Constraint Filtering:\n";
     std::cout << "  • Input candidates:  " << candidates.size() << "\n";
     std::cout << "  • Filtered out:      " << (candidates.size() - filtered.size()) << "\n";
     std::cout << "  • Remaining:         " << filtered.size() << "\n";
@@ -434,7 +434,7 @@ std::vector<int> PlutoConstraintSolver::generate_tile_size_variants(int base_siz
 
 void PlutoConstraintSolver::print_pluto_prog_info(PlutoProg* prog, const std::string& title) {
     if (!prog) {
-        std::cout << "⚠️  NULL PlutoProg\n";
+        std::cout << "WARNING  NULL PlutoProg\n";
         return;
     }
     
@@ -442,13 +442,13 @@ void PlutoConstraintSolver::print_pluto_prog_info(PlutoProg* prog, const std::st
     std::cout << "  " << title << "\n";
     std::cout << "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n";
     
-    std::cout << "📊 Program Statistics:\n";
+    std::cout << "Stats: Program Statistics:\n";
     std::cout << "  • Number of variables:  " << prog->nvar << "\n";
     std::cout << "  • Number of statements: " << prog->nstmts << "\n";
     std::cout << "  • Number of parameters: " << prog->npar << "\n\n";
     
     if (prog->nstmts > 0 && prog->stmts) {
-        std::cout << "📝 Statements:\n";
+        std::cout << "Info: Statements:\n";
         for (int s = 0; s < prog->nstmts; s++) {
             Stmt* stmt = prog->stmts[s];
             if (!stmt) continue;
@@ -655,10 +655,10 @@ ScheduleConfig TiramisuConfigEvaluator::search_best_config(
         
         // status
         if (config.has_bank_conflict) {
-            std::cout << " [⚠️ " << config.bank_conflict_way << "-way BC]";
+            std::cout << " [WARNING " << config.bank_conflict_way << "-way BC]";
         }
         if (config.has_coalescing_violation) {
-            std::cout << " [⚠️ Non-coalesced]";
+            std::cout << " [WARNING Non-coalesced]";
         }
         std::cout << "... ";
         
@@ -668,11 +668,11 @@ ScheduleConfig TiramisuConfigEvaluator::search_best_config(
             best_time = time;
             best_config = config;
             best_config.execution_time_ms = time;
-            std::cout << "✓ " << time << " ms (NEW BEST)\n";
+            std::cout << "Y " << time << " ms (NEW BEST)\n";
         } else if (time > 0) {
-            std::cout << "✓ " << time << " ms\n";
+            std::cout << "Y " << time << " ms\n";
         } else {
-            std::cout << "✗ Failed\n";
+            std::cout << "N Failed\n";
         }
     }
     
@@ -749,7 +749,7 @@ HybridOptimizer::OptimizationResult HybridOptimizer::optimize_with_neighbors(
     OptimizationResult result;
     
     // 1. PLUTOGenerate
-    std::cout << "\n🔍 Step 1: PLUTO generates candidates...\n";
+    std::cout << "\nSearch: Step 1: PLUTO generates candidates...\n";
     result.all_candidates = solver_.generate_candidates_from_optimal(
         optimal_prog, num_neighbors);
     result.num_candidates_generated = result.all_candidates.size();
@@ -764,7 +764,7 @@ HybridOptimizer::OptimizationResult HybridOptimizer::optimize_with_neighbors(
     result.num_legal_candidates = legal_candidates.size();
     
     // 2. Tiramisu
-    std::cout << "\n⚡ Step 2: Tiramisu evaluates candidates...\n";
+    std::cout << "\nEval: Step 2: Tiramisu evaluates candidates...\n";
     result.best_config = evaluator_.search_best_config(comp, legal_candidates);
     result.num_evaluated = legal_candidates.size();
     

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# 搜索空间对比实验运行脚本
+# Search space comparison experiment runner
 
 set -e
 
@@ -35,8 +35,4 @@ echo ""
 
 ./benchmark_search_space_comparison | tee ../search_space_results.txt
 
-echo ""
-echo "✅ Results saved to search_space_results.txt"
-echo ""
-echo "This output can be included in your paper's evaluation section!"
 echo ""

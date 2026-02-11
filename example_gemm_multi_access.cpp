@@ -122,7 +122,7 @@ void analyze_coalescing_conflicts() {
     std::cout << "    • Stride in i: N * sizeof(float) = 4096 bytes\n";
     std::cout << "    • Coalescingrequirements: innermost loop = j\n\n";
     
-    std::cout << "⚠️  Conflict Detection:\n";
+    std::cout << "WARNING  Conflict Detection:\n";
     std::cout << "    Arequires: kinnermost\n";
     std::cout << "    Brequires: jinnermost\n";
     std::cout << "    Crequires: jinnermost\n";
@@ -173,22 +173,22 @@ void evaluate_all_loop_orders() {
         
         // Print results
         std::cout << std::setw(20) << config.description
-                  << std::setw(12) << (a_coal ? "✓" : "✗")
-                  << std::setw(12) << (b_coal ? "✓" : "✗")
-                  << std::setw(12) << (c_coal ? "✓" : "✗")
+                  << std::setw(12) << (a_coal ? "Y" : "N")
+                  << std::setw(12) << (b_coal ? "Y" : "N")
+                  << std::setw(12) << (c_coal ? "Y" : "N")
                   << std::setw(15) << std::fixed << std::setprecision(1) << score;
         
         if (i == best_idx) {
-            std::cout << std::setw(18) << "⭐ BEST";
+            std::cout << std::setw(18) << "BEST BEST";
         }
         std::cout << "\n";
     }
     
     std::cout << "\n";
     std::cout << "Analysis:\n";
-    std::cout << "  • (i,j,k): A✗ B✓ C✓ → 2/3 coalesced, Band C dominate traffic\n";
-    std::cout << "  • (i,k,j): A✓ B✗ C✓ → 2/3 coalesced, Aand C traffic\n";
-    std::cout << "  • (k,i,j): A✓ B✓ C✓ → **but impossible!**（kcannot satisfy simultaneouslyA and B）\n";
+    std::cout << "  • (i,j,k): AN BY CY → 2/3 coalesced, Band C dominate traffic\n";
+    std::cout << "  • (i,k,j): AY BN CY → 2/3 coalesced, Aand C traffic\n";
+    std::cout << "  • (k,i,j): AY BY CY → **but impossible!**（kcannot satisfy simultaneouslyA and B）\n";
     std::cout << "  • Actual optimal: (i,k,j) or (i,j,k)，depends on weights\n\n";
     
     std::cout << "Weight Calculation (M=N=K=1024):\n";
@@ -295,7 +295,7 @@ int main() {
     std::cout << "       •  Arraycoalesced\n";
     std::cout << "       • small-trafficArraycan acceptnon-coalesced\n\n";
     
-    std::cout << "✅ Done! See MULTI_ACCESS_COALESCING.md for more details\n\n";
+    std::cout << "RETAIN Done! See MULTI_ACCESS_COALESCING.md for more details\n\n";
     
     return 0;
 }
